@@ -1,23 +1,10 @@
-all:
-	@echo "Specify a target:\nmake armv6l\nmake armv7\nmake i386\n"
 
-armv6l:
-	sudo bash build.sh "armv6l"
-
-armv7:
-	sudo bash build.sh "armv7"
-
-i386:
-	sudo setarch i686 bash build.sh "i386"
-
-amd64:
-	sudo bash build.sh "amd64"
-
-aarch64:
-	sudo bash build.sh "aarch64"
-
+ply-image: ply-image.c ply-frame-buffer.c checkmodifier.c Makefile
+	gcc ply-image.c ply-frame-buffer.c -o ply-image -lpng12 -lm -lz
+	strip ply-image
+	gcc checkmodifier.c -o checkmodifier
+	strip checkmodifier
+	
 clean:
-	sudo rm -f *.deb > /dev/null 2>&1
-	sudo rm -rf files/usr > /dev/null 2>&1
-	sudo rm -f src/ply-image >/dev/null 2>&1
-	sudo rm -f src/checkmodifier >/dev/null 2>&1
+	rm -f ply-image
+	rm -f checkmodifier
