@@ -1,10 +1,20 @@
-
+INSTALL=/usr/bin/install
+CC=gcc
+STRIP=strip
 ply-image: ply-image.c ply-frame-buffer.c checkmodifier.c Makefile
-	gcc ply-image.c ply-frame-buffer.c -o ply-image -lpng12 -lm -lz
-	strip ply-image
-	gcc checkmodifier.c -o checkmodifier
-	strip checkmodifier
-	
+	$(CC) ply-image.c ply-frame-buffer.c -o ply-image -lpng12 -lm -lz
+	$(STRIP) ply-image
+	$(CC) checkmodifier.c -o checkmodifier
+	$(STRIP) checkmodifier
+
+install:
+	$(INSTALL) -d $(DESTDIR)/sbin
+	$(INSTALL) -d $(DESTDIR)/usr
+	$(INSTALL) -m 755 -c ply-image $(DESTDIR)/sbin/ply-image
+	$(INSTALL) -m 755 -c checkmodifier $(DESTDIR)/sbin/checkmodifier
+	$(INSTALL) -m 755 -c splash_early $(DESTDIR)/sbin/splash_early
+	$(INSTALL) -m 644 -c splash.png $(DESTDIR)/usr/splash.png
+	$(INSTALL) -m 644 -c splash_sad.png $(DESTDIR)/usr/splash_sad.png
 clean:
 	rm -f ply-image
 	rm -f checkmodifier
