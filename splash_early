@@ -16,7 +16,21 @@ then
 	export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/sbin:/usr/sbin"
 	trap '' INT
 	echo 0 > /proc/sys/kernel/ctrl-alt-del
-	fbset -depth 8 && fbset -depth 16
+	for option in $(cat /proc/cmdline); do
+	  case $option in
+	    osmcdev=*)
+	      OPTION_OSMCDEV="${option#*=}"
+	      ;;
+	  esac
+	done
+	case $OPTION_OSMCDEV in
+	  vero2|vero3)
+	    /usr/bin/clear
+	    ;;
+	  *)
+	    fbset -depth 8 && fbset -depth 16
+	    ;;
+	esac
 	/usr/bin/setterm --cursor on
 	/bin/mount / -o remount,rw
 	/bin/mount /boot
