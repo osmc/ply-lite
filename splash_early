@@ -33,7 +33,7 @@ then
 	esac
 	/usr/bin/setterm --cursor on
 	/bin/mount / -o remount,rw
-	/bin/mount /boot
+	/bin/mount /boot 2>/dev/null
 	/bin/mount -t sysfs sysfs /sys >/dev/null 2>&1
 	/bin/mkdir /dev/pts
 	/bin/mount -t devpts devpts /dev/pts
