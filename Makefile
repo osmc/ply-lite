@@ -2,7 +2,7 @@ INSTALL=/usr/bin/install
 CC=gcc
 STRIP=strip
 ply-image: ply-image.c ply-frame-buffer.c checkmodifier.c Makefile
-	$(CC) ply-image.c ply-frame-buffer.c -o ply-image -lpng12 -lm -lz
+	$(CC) ply-image.c ply-frame-buffer.c -o ply-image -lpng -lm -lz
 	$(STRIP) ply-image
 	$(CC) checkmodifier.c -o checkmodifier
 	$(STRIP) checkmodifier
