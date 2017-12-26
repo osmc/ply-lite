@@ -6,7 +6,14 @@ export TERM=linux
 if grep -qw quiet /proc/cmdline
 then
 	/usr/bin/setterm --cursor off
-	/usr/bin/ply-image > /dev/null
+	print_env="/usr/bin/fw_printenv"
+        if [ -f "$print_env" ]
+        then
+            ${print_env} cuslogo >/dev/null 2>&1
+            cuslogo=$?
+        fi
+        if [ "$cuslogo" == 0 ]; then CUSLOGO="/usr/splash-custom.png"; fi
+	/usr/bin/ply-image $CUSLOGO > /dev/null
 else
 	sleep 2
 fi
