@@ -7,13 +7,14 @@ if grep -qw quiet /proc/cmdline
 then
 	/usr/bin/setterm --cursor off
 	print_env="/usr/bin/fw_printenv"
+	cuslogo=1
         if [ -f "$print_env" ]
         then
             ${print_env} cuslogo >/dev/null 2>&1
             cuslogo=$?
         fi
-        if [ "$cuslogo" == 0 ]; then CUSLOGO="/usr/splash-custom.png"; fi
-	/usr/bin/ply-image $CUSLOGO > /dev/null
+        if [ "$cuslogo" -eq 0 ]; then CUSLOGO="/usr/splash-custom.png"; fi
+	/usr/bin/ply-image 0 $CUSLOGO > /dev/null
 else
 	sleep 2
 fi
