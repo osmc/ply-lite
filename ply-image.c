@@ -450,7 +450,7 @@ main (int    argc,
 
   if (argc == 1)
     image = ply_image_new ("/usr/splash.png");
-  else
+  if (argc == 2)
   {
 	  int retcode = atoi(argv[1]);
 	  switch (retcode)
@@ -466,6 +466,9 @@ main (int    argc,
 			image = ply_image_new("/usr/splash_sad.png"); /* Unknown error */
 	  }
   }
+
+  if (argc == 3)
+     image = ply_image_new(argv[2]);
 
   if (!ply_image_load (image))
     {
