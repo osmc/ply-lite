@@ -101,18 +101,36 @@ ply_image_close_file (ply_image_t *image)
 ply_image_t *
 ply_image_new (const char *filename)
 {
+
   ply_image_t *image;
 
   assert (filename != NULL);
 
+  // check for oem filename
+
+  size_t filename_length = strlen(filename);
+  char *oem_filename = malloc(filename_length + 5);
+  strncpy(oem_filename, filename, filename_length);
+  strncat(oem_filename, ".oem", 4);
+
+  int useOEM = 0;
+
+  if (access(oem_filename, F_OK) == 0)
+    useOEM = 1;
+
   image = calloc (1, sizeof (ply_image_t));
 
-  image->filename = strdup (filename);
+  if (! useOEM)
+    image->filename = strdup (filename);
+  else
+    image->filename = strdup(oem_filename);
   image->fp = NULL;
   image->layout.address = NULL;
   image->size = -1;
   image->width = -1;
   image->height = -1;
+
+  free(oem_filename);
 
   return image;
 }
